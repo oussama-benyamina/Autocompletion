@@ -1,22 +1,58 @@
 body {
     font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-#search {
+h1 {
+    color: #333;
+}
+
+input[type="text"] {
     width: 300px;
     padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 #suggestions {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     max-height: 200px;
     overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    width: 300px;
 }
 
 .suggestion {
     padding: 10px;
+    cursor: pointer;
 }
 
 .suggestion:hover {
     background-color: #f0f0f0;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 5px 0;
+}
+
+a {
+    color: #1a0dab;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
