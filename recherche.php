@@ -1,7 +1,7 @@
 <?php
 require_once 'db.php';
 
-$search = $_GET['search'] ?? '';
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 $stmt = $db->prepare("SELECT * FROM animaux WHERE nom LIKE :search");
 $stmt->execute(['search' => "%$search%"]);

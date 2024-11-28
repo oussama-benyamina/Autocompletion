@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
     const suggestionsContainer = document.getElementById('suggestions');
-    const animalList = document.getElementById('animalList');
 
     searchInput.addEventListener('input', debounce(handleInput, 300));
 
@@ -13,33 +12,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(data => {
                     suggestionsContainer.innerHTML = data;
                     suggestionsContainer.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching suggestions:', error);
                 });
         } else {
-            suggestionsContainer.innerHTML = '';
-            suggestionsContainer.style.display = 'none';
+            // Show initial suggestions when the input is empty
+            fetch('autocomplete.php')
+                .then(response => response.text())
+                .then(data => {
+                    suggestionsContainer.innerHTML = data;
+                    suggestionsContainer.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching initial suggestions:', error);
+                });
         }
     }
+
+    // Show initial suggestions when the page loads
+    handleInput();
 
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('suggestion')) {
-            searchInput.value = e.target.textContent;
+            searchInput.value = e.target.textContent.trim();
             suggestionsContainer.style.display = 'none';
-            fetchAnimals(searchInput.value);
+        } else if (e.target !== searchInput && e.target !== suggestionsContainer) {
+            suggestionsContainer.style.display = 'none';
         }
     });
 
-    function fetchAnimals(query) {
-        fetch(`recherche.php?search=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(animals => {
-                animalList.innerHTML = animals.map(animal => `
-                    <div class="animal-card">
-                        <img src="${animal.photo}" alt="${animal.nom}">
-                        <h2>${animal.nom}</h2>
-                    </div>
-                `).join('');
-            });
-    }
+    searchInput.addEventListener('focus', () => {
+        if (suggestionsContainer.innerHTML.trim() !== '') {
+            suggestionsContainer.style.display = 'block';
+        }
+    });
 
     function debounce(func, delay) {
         let timeoutId;

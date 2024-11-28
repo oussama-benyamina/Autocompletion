@@ -10,14 +10,15 @@
 <body>
     <h1>Recherche d'Animaux</h1>
     <div class="search-container">
-
-        <form action="recherche.php" method="GET">
+        <form action="recherche.php" method="GET" style="    display: flex;">
             <input type="text" id="search" name="search" placeholder="Rechercher un animal...">
-            <button type="submit">Rechercher</button>
+            <button type="submit" class="search-button">Rechercher</button>
+            <div id="suggestions"></di>
+            
         </form>
+        
     </div>    
-    <div id="suggestions"></div>
-
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
 </body>
